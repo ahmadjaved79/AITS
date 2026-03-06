@@ -1,6 +1,27 @@
+# Python virtual environments - NEVER commit these
 venv/
+env/
+.venv/
 ml-service/venv/
-node_modules/
+
+# Python cache
 __pycache__/
 *.pyc
+*.pyo
+*.pyd
+.Python
+
+# Node modules
+node_modules/
+
+# Build outputs
+dist/
+build/
+
+# Environment files
 .env
+.env.local
+
+# IDE files
+.vscode/
+.idea/
