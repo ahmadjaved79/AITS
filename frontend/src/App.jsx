@@ -21,11 +21,26 @@ import CandidatesPage from './pages/recruiter/CandidatesPage';
 import CandidateDetailPage from './pages/recruiter/CandidateDetailPage';
 import AnalyticsPage from './pages/recruiter/AnalyticsPage';
 
+// ── Guards ────────────────────────────────────────────────────────────────────
+
+/** Recruiter-only guard — original logic, untouched */
 const ProtectedRoute = ({ children }) => {
   const { user } = useAuth();
   return user?.role === 'recruiter' ? children : <Navigate to="/login" replace />;
 };
 
+/**
+ * NEW — Candidate guard.
+ * Candidates must be logged in (role === 'candidate') to access
+ * protected candidate routes like applying and taking validation tests.
+ * Job browsing (/) stays public so anyone can see open positions.
+ */
+const CandidateRoute = ({ children }) => {
+  const { user } = useAuth();
+  return user?.role === 'candidate' ? children : <Navigate to="/login" replace />;
+};
+
+// ── App ───────────────────────────────────────────────────────────────────────
 export default function App() {
   return (
     <AuthProvider>
@@ -33,15 +48,34 @@ export default function App() {
 
         {/* ── Candidate Portal ── */}
         <Route element={<CandidateLayout />}>
+          {/* Public — anyone can browse jobs */}
           <Route path="/" element={<JobListPage />} />
-          <Route path="/apply/:jobId" element={<ApplyPage />} />
-          <Route path="/validation/:validationId" element={<ValidationPage />} />
+
+          {/* Protected — must be logged-in candidate to apply */}
+          <Route
+            path="/apply/:jobId"
+            element={
+              <CandidateRoute>
+                <ApplyPage />
+              </CandidateRoute>
+            }
+          />
+
+          {/* Protected — must be logged-in candidate to take validation test */}
+          <Route
+            path="/validation/:validationId"
+            element={
+              <CandidateRoute>
+                <ValidationPage />
+              </CandidateRoute>
+            }
+          />
         </Route>
 
-        {/* ── Auth ── */}
+        {/* ── Auth ── (single page handles both recruiter + candidate tabs) */}
         <Route path="/login" element={<LoginPage />} />
 
-        {/* ── Recruiter Portal ── */}
+        {/* ── Recruiter Portal ── original, untouched */}
         <Route path="/recruiter" element={<ProtectedRoute><RecruiterLayout /></ProtectedRoute>}>
           <Route index element={<Navigate to="dashboard" replace />} />
           <Route path="dashboard" element={<DashboardPage />} />

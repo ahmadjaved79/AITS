@@ -5,7 +5,7 @@ const supabase = require('../utils/supabase');
 
 const signToken = (id) => jwt.sign({ id }, process.env.JWT_SECRET, { expiresIn: '7d' });
 
-// POST /api/auth/login
+// POST /api/auth/login  ── original, untouched
 router.post('/login', async (req, res) => {
   try {
     const { email, password } = req.body;
@@ -29,7 +29,7 @@ router.post('/login', async (req, res) => {
   } catch (e) { res.status(500).json({ error: e.message }); }
 });
 
-// POST /api/auth/seed — create default recruiter
+// POST /api/auth/seed  ── original, untouched
 router.post('/seed', async (req, res) => {
   try {
     const { data: existing } = await supabase
@@ -50,5 +50,40 @@ router.post('/seed', async (req, res) => {
     res.json({ message: 'Recruiter seeded', email: 'recruiter@ahis.com', password: 'recruiter123' });
   } catch (e) { res.status(500).json({ error: e.message }); }
 });
+
+// ── NEW ──────────────────────────────────────────────────────────────────────
+// POST /api/auth/register  ── candidate self-registration
+router.post('/register', async (req, res) => {
+  try {
+    const { name, email, password } = req.body;
+    if (!name || !email || !password)
+      return res.status(400).json({ error: 'Name, email and password are required' });
+
+    if (password.length < 6)
+      return res.status(400).json({ error: 'Password must be at least 6 characters' });
+
+    // Check if email already taken
+    const { data: existing } = await supabase
+      .from('users').select('id').eq('email', email).limit(1);
+
+    if (existing?.length)
+      return res.status(409).json({ error: 'An account with this email already exists' });
+
+    const hashed = await bcrypt.hash(password, 12);
+    const { data: inserted, error } = await supabase
+      .from('users')
+      .insert({ name, email, password: hashed, role: 'candidate' })
+      .select('id, name, email, role')
+      .single();
+
+    if (error) throw new Error(error.message);
+
+    res.status(201).json({
+      token: signToken(inserted.id),
+      user: { id: inserted.id, name: inserted.name, email: inserted.email, role: inserted.role }
+    });
+  } catch (e) { res.status(500).json({ error: e.message }); }
+});
+// ── END NEW ──────────────────────────────────────────────────────────────────
 
 module.exports = router;
