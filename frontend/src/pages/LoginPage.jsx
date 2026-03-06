@@ -14,8 +14,8 @@ export function LoginPage() {
     e.preventDefault(); setErr(''); setLoading(true);
     try {
       const { data } = await api.post('/auth/login', form);
-      login(data.user, data.token);
-      navigate('/recruiter/dashboard');
+login(data.user, data.token);
+navigate('/recruiter/dashboard');
     } catch (e) {
       setErr(e.response?.data?.error || 'Login failed');
     } finally { setLoading(false); }
