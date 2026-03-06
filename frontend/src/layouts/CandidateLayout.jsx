@@ -165,7 +165,7 @@ export default function CandidateLayout() {
             <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full text-sm font-semibold text-white mb-6 border"
               style={{ background: 'rgba(255,255,255,0.08)', borderColor: 'rgba(255,255,255,0.15)', backdropFilter: 'blur(8px)' }}>
               <span className="w-2 h-2 bg-green-400 rounded-full animate-pulse" />
-              Powered by Gemini AI + Python NLP
+              Powered by  AI + Python NLP
               <span className="w-2 h-2 bg-green-400 rounded-full animate-pulse" />
             </div>
 
@@ -202,7 +202,7 @@ export default function CandidateLayout() {
               statsVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'
             }`}>
               {[
-                { value: 'Gemini 2.0',  label: 'AI Engine',        icon: '🤖' },
+                { value: 'cosine similarity',  label: 'AI Engine',        icon: '🤖' },
                 { value: '< 30s',       label: 'Resume Analysis',   icon: '⚡' },
                 { value: 'Cosine NLP',  label: 'Similarity Engine', icon: '🧪' },
               ].map(s => (
@@ -232,7 +232,7 @@ export default function CandidateLayout() {
             <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
               {[
                 { step:'01', icon:'📄', title:'Upload Resume',    desc:'Submit PDF resume. We extract text instantly using pdf-parse.',                       color:'from-blue-500 to-blue-700',   bg:'#eff6ff', border:'#bfdbfe' },
-                { step:'02', icon:'🧠', title:'AI Skill Extract', desc:'Gemini AI reads your resume and identifies every relevant technical skill.',          color:'from-purple-500 to-purple-700',bg:'#faf5ff', border:'#e9d5ff' },
+                { step:'02', icon:'🧠', title:'AI Skill Extract', desc:'AI reads your resume and identifies every relevant technical skill.',          color:'from-purple-500 to-purple-700',bg:'#faf5ff', border:'#e9d5ff' },
                 { step:'03', icon:'📐', title:'Cosine Scoring',   desc:'Python NLP calculates semantic similarity between your skills and job requirements.',  color:'from-indigo-500 to-indigo-700',bg:'#eef2ff', border:'#c7d2fe' },
                 { step:'04', icon:'🏆', title:'Get Ranked',       desc:'You receive a live score. Top candidates are shortlisted and invited for MCQ tests.',  color:'from-green-500 to-green-700',  bg:'#f0fdf4', border:'#bbf7d0' },
               ].map((item, i) => (
@@ -268,7 +268,7 @@ export default function CandidateLayout() {
             </div>
             <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
               {[
-                { icon:'🤖', name:'Gemini 2.0 Flash', desc:'Skill extraction & MCQ generation', tag:'AI' },
+                { icon:'🤖', name:'spaCy', desc:'Skill extraction & MCQ generation', tag:'AI' },
                 { icon:'🐍', name:'Python NLP',        desc:'Cosine similarity & semantic ranking', tag:'Backend' },
                 { icon:'📐', name:'scikit-learn',      desc:'TF-IDF vectorization & scoring', tag:'ML' },
                 { icon:'⚛️', name:'React + Vite',      desc:'Fast, responsive candidate UI', tag:'Frontend' },
@@ -356,7 +356,7 @@ export default function CandidateLayout() {
           <div className="border-t mt-8 pt-6 flex flex-col md:flex-row items-center justify-between text-xs text-blue-500 gap-2"
             style={{ borderColor: 'rgba(255,255,255,0.08)' }}>
             <p>© {new Date().getFullYear()} AHIS. All rights reserved.</p>
-            <p>Powered by Gemini AI · Python NLP · Cosine Similarity · React</p>
+            <p>Powered by  Python NLP · Cosine Similarity · React</p>
           </div>
         </div>
       </footer>

@@ -179,7 +179,7 @@ export default function RecruiterLayout() {
               QUICK STATS
             </p>
             <MiniStat icon="💼" label="Active Jobs"   value={jobs.length || '—'} />
-            <MiniStat icon="🤖" label="AI Engine"     value="Gemini 2.0" />
+            <MiniStat icon="🤖" label="AI Engine"     value="spaCy" />
             <MiniStat icon="⚡" label="Status"        value="Online" />
           </div>
         )}
@@ -377,7 +377,7 @@ export default function RecruiterLayout() {
           <div className="flex items-center gap-4">
             <span className="flex items-center gap-1">
               <span className="w-1.5 h-1.5 bg-green-500 rounded-full animate-pulse" />
-              Gemini AI Online
+               AI NLP Online
             </span>
             <span className="flex items-center gap-1">
               <span className="w-1.5 h-1.5 bg-blue-500 rounded-full animate-pulse" />
